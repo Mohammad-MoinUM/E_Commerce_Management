@@ -44,17 +44,17 @@ Route::get('/category/{content}', 'App\Http\Controllers\HomeController@products'
 Route::get('/seller/{content}', 'App\Http\Controllers\HomeController@seller');
 Route::get('/product/{product}', 'App\Http\Controllers\HomeController@product');
 
-Route::prefix('vendor')->group(function(){
-    Route::controller(App\Http\Controllers\VendorController::class)->group(function () {
-        Route::get('/', 'signin')->middleware('alreadyLogin');
-        Route::post('/', 'check');
-        // Route::get('/signup', 'signup')->middleware('alreadyLogin');
-        // Route::post('/signup', 'store');
-        Route::get('/dashboard', 'view')->middleware('vendorAuth');
-        Route::get('/dashboard/edit', 'edit')->middleware('vendorAuth');
-        Route::patch('/dashboard/edit', 'update')->middleware('vendorAuth');
-        Route::get('/logout', 'logout')->middleware('vendorAuth');
-    });
+    Route::prefix('vendor')->group(function(){
+        Route::controller(App\Http\Controllers\VendorController::class)->group(function () {
+            Route::get('/', 'signin')->middleware('alreadyLogin');
+            Route::post('/', 'check');
+            Route::get('/signup', 'signup')->middleware('alreadyLogin');
+            Route::post('/signup', 'store');
+            Route::get('/dashboard', 'view')->middleware('vendorAuth');
+            Route::get('/dashboard/edit', 'edit')->middleware('vendorAuth');
+            Route::patch('/dashboard/edit', 'update')->middleware('vendorAuth');
+            Route::get('/logout', 'logout')->middleware('vendorAuth');
+        });
     
 
     Route::prefix('product')->group(function () {

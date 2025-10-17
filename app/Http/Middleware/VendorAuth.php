@@ -21,6 +21,8 @@ class VendorAuth
         if(Session::has('vendorId')){
             return $next($request);
         }
-        return abort('403');
+        return redirect('/vendor')
+            ->with('alert-type','error')
+            ->with('message','Please login as vendor');
     }
 }
