@@ -34,17 +34,22 @@ class CategoryController extends Controller
             'name'=>'required',
             'image'=>'required',
         ]);
-        
-        // Store the image without using Intervention/Image
-        if (request()->hasFile('image')) {
-            $imagePath = request('image')->store('category','public');
-            $imagePath = "/storage/".$imagePath;
-            $data = array_merge(
-                $data,
-                ['image'=>$imagePath]
-            );
+        $storedPath = request('image')->store('category','public');
+        $absolutePath = public_path("storage/{$storedPath}");
+        try {
+            $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $image->save();
+        } catch (\Throwable $e) {
+            // GD/Imagick not available, keep original uploaded image without resizing
         }
-        
+        $imagePath = "/storage/".$storedPath;
+        $data = array_merge(
+            $data,
+            ['image'=>$imagePath]
+        );
         Category::create($data);
         return redirect('/admin/category')->with('message','added Successfully');
     }
@@ -63,14 +68,21 @@ class CategoryController extends Controller
         if(request('image')!=null)
         {
             $filePath = public_path().$category->image;
-            File::delete($filePath);
-            $imagePath = request('image')->store('category','public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->resize(500, 500, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $image->save();
-            $imagePath = "/storage/".$imagePath;
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+            $storedPath = request('image')->store('category','public');
+            $absolutePath = public_path("storage/{$storedPath}");
+            try {
+                $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $image->save();
+            } catch (\Throwable $e) {
+                // GD/Imagick not available, keep original uploaded image without resizing
+            }
+            $imagePath = "/storage/".$storedPath;
             $data = array_merge(
                 $data,
                 ['image'=>$imagePath]

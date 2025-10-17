@@ -36,7 +36,7 @@ class ProductController extends Controller
                     ->with('alert-type','error')
                     ->with('message','Login First');
         } else{
-            if(User::find(\Illuminate\Support\Facades\Session::get('userId'))->orders->contains('product_id',request('product_id'))){
+            if(User::find(Session::get('userId'))->orders->contains('product_id',request('product_id'))){
                 ProductRate::updateOrCreate(['user_id'=>request('user_id'),'product_id'=>request('product_id')],['rate'=>request('rate')]);
                 return redirect()->back()
                         ->with('alert-type','success')
@@ -73,19 +73,22 @@ class ProductController extends Controller
             'quantity' => 'required|numeric',
             'image' => ['required', 'image'],
         ]);
-
-        // Store the image without using Intervention/Image
-        if (request()->hasFile('image')) {
-            $imagePath = request('image')->store('product', 'public');
-            $imagePath = "/storage/" . $imagePath;
+        $imagePath = request('image')->store('product', 'public');
+        $absolutePath = public_path("storage/{$imagePath}");
+        try {
+            $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $image->save();
+        } catch (\Throwable $e) {
+            // GD/Imagick missing or Intervention unable to process: keep original upload
         }
-
-        // Add vendor_id with default value 1 (or appropriate default vendor)
+        $imagePath = "/storage/" . $imagePath;
         $data = array_merge(
             $data,
             ['attributes' => json_encode(request('attributeArr'))],
-            ['image' => $imagePath],
-            ['vendor_id' => 1] // Adding default vendor_id
+            ['image' => $imagePath]
         );
         Product::create($data);
         return redirect('/admin/product')->with('message', 'added Successfully');
@@ -123,13 +126,20 @@ class ProductController extends Controller
         }
         if (request('image') != null) {
             $filePath = public_path() . $product->image;
-            File::delete($filePath);
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
             $imagePath = request('image')->store('product', 'public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->resize(500, 500, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $image->save();
+            $absolutePath = public_path("storage/{$imagePath}");
+            try {
+                $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $image->save();
+            } catch (\Throwable $e) {
+                // GD/Imagick missing or Intervention unable to process: keep original upload
+            }
             $imagePath = "/storage/" . $imagePath;
             $data = array_merge(
                 $data,
@@ -146,5 +156,3 @@ class ProductController extends Controller
         return redirect('/admin/product')->with('danger-message', 'Deleted Successfully');
     }
 }
-
-

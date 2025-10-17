@@ -12,6 +12,7 @@ use App\Models\OrderItems;
 use App\Models\Vendor;
 use App\Models\Wishlist;
 use App\Models\ProductComment;
+use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -88,16 +89,18 @@ class UserController extends Controller
 
         $data['password'] = Hash::make(request('password'));
 
-        if (request('loginType')) {
-            User::create($data);
-            if (request()->session()->has('loginId')) {
-                return redirect('/admin/user')->with('alert-type', 'success')->with('message', 'Added Successfully');
-            }
-            return $this->check();
-        } else {
-            User::create($data);
+        // Create the user
+        $user = User::create($data);
+
+        // If an admin is logged in, stay within the admin panel
+        if (request()->session()->has('loginId')) {
             return redirect('/admin/user')->with('alert-type', 'success')->with('message', 'Added Successfully');
         }
+
+        // For normal frontend registration: auto-login and go to user dashboard
+        request()->session()->put('userId', $user->id);
+        request()->session()->put('userName', $user->name);
+        return redirect('/profile')->with('alert-type', 'success')->with('message', 'Registered Successfully');
     }
 
     public function edit(User $user)
@@ -205,6 +208,27 @@ class UserController extends Controller
     public function wallet()
     {
         return view('pages.wallet');
+    }
+
+    public function addNewAddress()
+    {
+        $data = request()->validate([
+            'address' => 'required'
+        ]);
+
+        $userId = Session::get('userId');
+        $nextNumber = Address::where('user_id', $userId)->count() + 1;
+        $address = Address::create([
+            'user_id' => $userId,
+            'address_number' => $nextNumber,
+            'address' => $data['address']
+        ]);
+
+        // Immediately show payment methods for the newly added address
+        $paymentMethods = PaymentMethod::get();
+        return view('pages.paymentMethod', compact('address', 'paymentMethods'))
+            ->with('alert-type', 'success')
+            ->with('message', 'Address added');
     }
 
     public function orderHistory()

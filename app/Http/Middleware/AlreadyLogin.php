@@ -16,10 +16,22 @@ class AlreadyLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->has('loginId') || $request->session()->has('vendorId') || $request->session()->has('userId')) {
-            return abort('403');
-        } else{
-            return $next($request);
+        $session = $request->session();
+        if($session->has('loginId')){
+            return redirect('/admin/dashboard')
+                ->with('alert-type','info')
+                ->with('message','You are already logged in');
         }
+        if($session->has('vendorId')){
+            return redirect('/vendor/dashboard')
+                ->with('alert-type','info')
+                ->with('message','You are already logged in');
+        }
+        if($session->has('userId')){
+            return redirect('/profile')
+                ->with('alert-type','info')
+                ->with('message','You are already logged in');
+        }
+        return $next($request);
     }
 }

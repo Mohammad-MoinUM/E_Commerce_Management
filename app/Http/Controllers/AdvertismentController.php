@@ -35,11 +35,16 @@ class AdvertismentController extends Controller
             'duration'=>'required|numeric|gt:0'
         ]);
         $imagePath = request('image')->store('advertisment', 'public');
-        $image = Image::make(public_path("storage/{$imagePath}"))->resize(500, 500, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-        $image->save();
+        $absolutePath = public_path("storage/{$imagePath}");
+        try {
+            $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $image->save();
+        } catch (\Throwable $e) {
+            // GD/Imagick missing or Intervention unable to process: keep original upload
+        }
         $imagePath = "/storage/" . $imagePath;
         $data = array_merge(
             $data,
@@ -59,11 +64,16 @@ class AdvertismentController extends Controller
         ]);
         if(request('image')!=null){
             $imagePath = request('image')->store('advertisment', 'public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->resize(500, 500, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $image->save();
+            $absolutePath = public_path("storage/{$imagePath}");
+            try {
+                $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $image->save();
+            } catch (\Throwable $e) {
+                // GD/Imagick missing or Intervention unable to process: keep original upload
+            }
             $imagePath = "/storage/" . $imagePath;
             $data = array_merge(
                 $data,

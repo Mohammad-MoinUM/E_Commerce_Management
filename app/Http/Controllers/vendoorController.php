@@ -85,21 +85,23 @@ class VendorController extends Controller
             'shop_address'=>'required'
         ]);
         if (request('image') != null) {
-            if($vendor->image!=null){
+            if ($vendor->image != null) {
                 $filePath = public_path() . $vendor->image;
                 File::delete($filePath);
             }
-            $imagePath = request('image')->store('vendor', 'public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->resize(500, 500, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $image->save();
-            $imagePath = "/storage/" . $imagePath;
-            $data = array_merge(
-                $data,
-                ['image' => $imagePath]
-            );
+            $storedPath = request('image')->store('vendor', 'public');
+            $absolutePath = public_path("storage/{$storedPath}");
+            try {
+                $image = Image::make($absolutePath)->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $image->save();
+            } catch (\Throwable $e) {
+                // Skip resizing if GD/Imagick not available, use original upload
+            }
+            $imagePath = "/storage/" . $storedPath;
+            $data = array_merge($data, ['image' => $imagePath]);
         }
         Session::put('vendorName',$data['name']);
         $vendor->update($data);
