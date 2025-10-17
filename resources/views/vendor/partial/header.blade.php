@@ -1,5 +1,13 @@
 <?php
 $vendor = App\Models\Vendor::find(Session::get('vendorId'));
+// Resolve a safe profile image path with a reliable fallback
+$profileImg = '/admino/images/faces/face4.jpg';
+if ($vendor && $vendor->image) {
+    $candidate = public_path() . $vendor->image;
+    if (file_exists($candidate)) {
+        $profileImg = $vendor->image;
+    }
+}
 ?>
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex justify-content-center">
@@ -124,7 +132,7 @@ $vendor = App\Models\Vendor::find(Session::get('vendorId'));
             </li>
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                    <img src="{{ $vendor->image ?? '/storage/product/no-image.png' }}" alt="profile" />
+                    <img src="{{ $profileImg }}" alt="profile" />
                     <span class="nav-profile-name">{{ $vendor->name }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">

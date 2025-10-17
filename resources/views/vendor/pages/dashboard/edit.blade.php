@@ -87,8 +87,7 @@
                                 <label class="col-sm-3 col-form-label">Profile Photo</label>
                                 <div class="col-sm-8 ml-3">
                                     <input type="file" class="custom-file-input" id="customFile" name="image">
-                                    <label class="custom-file-label"
-                                        for="customFile">{{ substr($vendor->image, 18) }}</label>
+                                    <label class="custom-file-label" for="customFile">{{ $vendor->image ? substr($vendor->image, 18) : 'Choose file' }}</label>
                                 </div>
                             </div>
                             @error('image')
