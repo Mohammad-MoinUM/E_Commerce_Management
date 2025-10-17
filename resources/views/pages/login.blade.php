@@ -22,16 +22,6 @@
                     <h1>Login</h1>
                     <form method="post">
                         @csrf
-                        <div style="display: flex;justify-content: space-evenly;margin:20px 0px;">
-                            <div>
-                                <input type="radio" id="vendor" name="loginType" value="vendor">
-                                <label for="vendor">Vendor</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="user" name="loginType" value="user" checked>
-                                <label for="user">User</label>
-                            </div>
-                        </div>
                         <div>
                             <input type="text" value="{{ old('email') }}" name="email" placeholder="Email"
                                 class="form-control" />
@@ -39,8 +29,9 @@
                         <div>
                             <input type="password" name="password" placeholder="Password" class="form-control" />
                         </div>
-                        <div>
-                            <input type="submit" value="Login" name="ok" class="btn btn-submit" />
+                        <div style="display:flex; gap:8px;">
+                            <input type="submit" value="Login as User" name="ok" class="btn btn-submit" formaction="/login" />
+                            <input type="submit" value="Login as Vendor" name="ok" class="btn btn-submit" formaction="/vendor" />
                         </div>
                         <div class="forgot-pass">
                             <a href="forgot-pass.php">Forgot Password ?</a>
@@ -54,16 +45,6 @@
                     <h1>Register</h1>
                     <form action="/register" method="post">
                         @csrf
-                        <div style="display: flex;justify-content: space-evenly;margin:20px 0px;">
-                            <div>
-                                <input type="radio" id="vendor" name="loginType" value="vendor">
-                                <label for="vendor">Vendor</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="user" name="loginType" value="user" checked>
-                                <label for="user">User</label>
-                            </div>
-                        </div>
                         <div>
                             <input type="text" value="{{ old('name') }}" name="name" placeholder="Enter Name"
                                 class="form-control" />
@@ -83,8 +64,9 @@
                             <input type="password" name="password_confirmation" placeholder="Confirm Password"
                                 class="form-control" />
                         </div>
-                        <div>
-                            <input type="submit" value="Register" class="btn btn-submit" />
+                        <div style="display:flex; gap:8px;">
+                            <input type="submit" value="Register as User" class="btn btn-submit" />
+                            <input type="submit" value="Register as Vendor" class="btn btn-submit" formaction="/vendor/signup" />
                         </div>
                     </form>
                 </div>

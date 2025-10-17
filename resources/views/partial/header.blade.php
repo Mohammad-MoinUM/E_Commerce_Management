@@ -18,14 +18,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b
                                 class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/category/7">Keyboard</a></li>
-                            <li><a href="/category/8">Optical Mouse</a></li>
-                            <li><a href="/category/5">CPU Cabinet</a></li>
-                            <li><a href="/category/6">Screen</a></li>
-                            <li><a href="/category/9">Printer</a></li>
-                            <li><a href="/">Pendrive</a></li>
-                            <li><a href="/">Hard Drive</a></li>
-                            <li><a href="/">Much More</a></li>
+                            @php($categories = \App\Models\Category::get())
+                            @forelse($categories as $category)
+                                <li><a href="/category/{{ $category->id }}">{{ $category->name }}</a></li>
+                            @empty
+                                <li><a href="#">No categories available</a></li>
+                            @endforelse
                         </ul>
                     </li>
                     <li><a href="/about">About</a></li>

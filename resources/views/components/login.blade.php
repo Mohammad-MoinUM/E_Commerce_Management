@@ -3,11 +3,7 @@
         @csrf
         <h1 class="form__heading">Register<button onclick="closeForm(event,'register')" class="form__close">X</button></h1>
         <div class="form__content">
-            <div class="checkbox__container">
-                <label for="loginType" class="checkbox__label">Vendor</label>
-                <input type="checkbox" name="loginType" value="1" class="form__checkbox">
-                <label for="loginType" class="checkbox__label">User</label>
-            </div>
+            <!-- Choose to register as User or Vendor -->
             <div class="input__container">
                 <input type="text" name="name" class="input" placeholder="a">
                 <label for="email" class="label">Name</label>
@@ -24,7 +20,10 @@
                 <input type="password" name="password" class="input" placeholder="a">
                 <label for="password" class="label">Password</label>
             </div>
-            <input type="submit" class="submit__button" value="Register">
+            <div class="input__container" style="margin-top:8px;">
+                <input type="submit" class="submit__button" value="Register as User">
+                <input type="submit" class="submit__button" formaction="/vendor/signup" value="Register as Vendor" style="margin-left:8px;">
+            </div>
     </form>
 </div>
 
@@ -43,8 +42,10 @@
                 <input type="password" name="password" class="input" placeholder="a">
                 <label for="password" class="label">Password</label>
             </div>
-
-            <input type="submit" class="submit__button" value="Login">
+            <div class="input__container" style="margin-top:8px;">
+                <input type="submit" class="submit__button" value="Login as User">
+                <input type="submit" class="submit__button" formaction="/vendor" value="Login as Vendor" style="margin-left:8px;">
+            </div>
     </form>
 </div>
 

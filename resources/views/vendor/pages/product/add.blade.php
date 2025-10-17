@@ -14,18 +14,26 @@
                     <div class="row">
                         <label class="col-sm-3 col-form-label">Select Brand</label>
                         <div class="col-sm-3">
-                            <select name="brand_id" class="form-control">
-                                @foreach ($brands as $brand)
-                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                @endforeach
+                            <select name="brand_id" class="form-control" required {{ count($brands) ? '' : 'disabled' }}>
+                                @if (count($brands))
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">No brands available — add in Admin</option>
+                                @endif
                             </select>
                         </div>
                         <label class="col-sm-3 col-form-label">Select Category</label>
                         <div class="col-sm-3">
-                            <select name="category_id" class="form-control">
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
+                            <select name="category_id" class="form-control" required {{ count($categories) ? '' : 'disabled' }}>
+                                @if (count($categories))
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">No categories available — add in Admin</option>
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -33,6 +41,7 @@
                         <label class="col-sm-3 col-form-label">Select Discount</label>
                         <div class="col-sm-9">
                             <select name="discount_id" class="form-control">
+                                <option value="">No Discount</option>
                                 @foreach ($discounts as $discount)
                                     <option value="{{ $discount->id }}">{{ $discount->name }}</option>
                                 @endforeach
@@ -42,12 +51,16 @@
                     <div class="row mt-4 addAttributes" id="addAttributes">
                         <label class="col-sm-3 col-form-label">Select Attributes</label>
                         <div class="col-sm-6 d-flex removeAttributes">
-                            <select id="attribute_id" name="attribute_id" class="form-control">
-                                @foreach ($attributes as $attribute)
-                                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
-                                @endforeach
+                            <select id="attribute_id" name="attribute_id" class="form-control" {{ count($attributes) ? '' : 'disabled' }}>
+                                @if (count($attributes))
+                                    @foreach ($attributes as $attribute)
+                                        <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">No attributes — add in Admin</option>
+                                @endif
                             </select>
-                            <button onclick="remove()" class="col-sm-4 ms-3 lol btn btn-primary">Get Attributes</button>
+                            <button type="button" onclick="remove(); return false;" class="col-sm-4 ms-3 lol btn btn-primary">Get Attributes</button>
                         </div>
                     </div>
 

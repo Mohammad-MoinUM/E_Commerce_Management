@@ -5,8 +5,18 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
+                    <?php
+                    // Resolve a safe profile image path with a reliable fallback
+                    $profileImg = '/admino/images/faces/face4.jpg';
+                    if ($vendor && $vendor->image) {
+                        $candidate = public_path() . $vendor->image;
+                        if (file_exists($candidate)) {
+                            $profileImg = $vendor->image;
+                        }
+                    }
+                    ?>
                     <img style="border-style: groove;border-radius: 20px;" width=253 height=183
-                        src="{{ $vendor->image ?? '/storage/product/no-image.png' }}" alt="" />
+                        src="{{ $profileImg }}" alt="profile" />
                     <br />
                     <br />
                 </div>
