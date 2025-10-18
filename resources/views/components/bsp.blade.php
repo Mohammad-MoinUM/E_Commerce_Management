@@ -6,7 +6,13 @@
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <a href="/product/{{ $product->id }}">
                         <div class="box">
-                            <img src="{{ $product->image ?? '/storage/product/no-image.png' }}" class="img-responsive" width="800" height="400" loading="lazy" /><br />
+                            @php
+                                $imgSrc = $product->image;
+                                if (!$imgSrc || !file_exists(public_path($imgSrc))) {
+                                    $imgSrc = '/storage/product/no-image.png';
+                                }
+                            @endphp
+                            <img src="{{ $imgSrc }}" class="img-responsive" width="800" height="400" loading="lazy" /><br />
                             <label>{{ $product->name }}</label><br />
                         </div>
                     </a>
