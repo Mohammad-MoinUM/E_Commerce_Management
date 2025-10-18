@@ -6,7 +6,13 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                     <a href="/seller/{{ $seller->id }}">
                         <div class="box">
-                            <img src="{{ $seller->image ?? '/storage/product/no-image.png' }}" /><br />
+                            @php
+                                $imgSrc = $seller->image;
+                                if (!$imgSrc || !file_exists(public_path($imgSrc))) {
+                                    $imgSrc = '/storage/product/no-image.png';
+                                }
+                            @endphp
+                            <img src="{{ $imgSrc }}" /><br />
                             <label>{{ $seller->name }}</label><br />
                         </div>
                     </a>

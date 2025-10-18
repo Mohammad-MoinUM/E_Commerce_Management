@@ -18,7 +18,7 @@
             <form class="pt-3" method="post">
               @csrf
               <div class="form-group">
-                <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
               </div>
               @error('email')<div class="text-danger">{{$message}}</div>@enderror
               <div class="form-group">

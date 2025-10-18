@@ -4,7 +4,13 @@
         @if(isset($categories) && count($categories) > 0)
             @foreach ($categories->take(6) as $index => $category)
                 <div class="item @if ($index == 0) active @endif">
-                    <div style="background:url('{{ $category->image }}') center center; background-size:contain; background-repeat: no-repeat;"
+                    @php
+                        $bg = $category->image;
+                        if (!$bg || !file_exists(public_path($bg))) {
+                            $bg = '/storage/product/no-image.png';
+                        }
+                    @endphp
+                    <div style="background:url('{{ $bg }}') center center; background-size:contain; background-repeat: no-repeat;"
                         class="slider-size">
                     </div>
                 </div>

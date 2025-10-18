@@ -5,7 +5,7 @@
             <div class="col-md-4 address">
                 <label>Contact Us</label>
                 <address>Khulna University of Engineering & Technology</address>
-                <address>Cell- 01783226830<br />Email: forhadrony161@gmail.com.com</address>
+                <address>Cell- 01742472342<br />Email: mohammadmoinuddin2491@gmail.com</address>
             </div>
             <div class="col-md-4 social" align="center">
                 <label>Follow Us on</label><br />
@@ -20,7 +20,7 @@
 
     <div class="footer-credit">
         <div class="container" align="center">
-            <label>&copy; 2024 by Forhad Islam Rony</label>
+            <label>&copy; Mohammad Moin Uddin Moin</label>
         </div>
     </div>
 </div>
