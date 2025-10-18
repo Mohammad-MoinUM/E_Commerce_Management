@@ -6,8 +6,13 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                     <a href="/category/{{ $category->id }}">
                         <div class="box ">
-                            <img src="{{ $category->image ?? '/storage/product/no-image.png' }}"
-                                class="img-responsive center-block" />
+                            @php
+                                $imgSrc = $category->image;
+                                if (!$imgSrc || !file_exists(public_path($imgSrc))) {
+                                    $imgSrc = '/storage/product/no-image.png';
+                                }
+                            @endphp
+                            <img src="{{ $imgSrc }}" class="img-responsive center-block" />
                             <br />
                             <label>{{ $category->name }}</label><br />
                         </div>
