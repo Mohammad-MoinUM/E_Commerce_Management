@@ -20,10 +20,11 @@
                 <input type="password" name="password" class="input" placeholder="a">
                 <label for="password" class="label">Password</label>
             </div>
-            <div class="input__container" style="margin-top:8px;">
+            <div class="input__container form__actions" style="margin-top:8px;">
                 <input type="submit" class="submit__button" value="Register as User">
-                <input type="submit" class="submit__button" formaction="/vendor/signup" value="Register as Vendor" style="margin-left:8px;">
+                <input type="submit" class="submit__button" formaction="/vendor/signup" value="Register as Vendor">
             </div>
+        </div>
     </form>
 </div>
 
@@ -42,10 +43,11 @@
                 <input type="password" name="password" class="input" placeholder="a">
                 <label for="password" class="label">Password</label>
             </div>
-            <div class="input__container" style="margin-top:8px;">
+            <div class="input__container form__actions" style="margin-top:8px;">
                 <input type="submit" class="submit__button" value="Login as User">
-                <input type="submit" class="submit__button" formaction="/vendor" value="Login as Vendor" style="margin-left:8px;">
+                <input type="submit" class="submit__button" formaction="/vendor" value="Login as Vendor">
             </div>
+        </div>
     </form>
 </div>
 

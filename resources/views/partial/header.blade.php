@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!-- <a class="navbar-brand navbar-image" href="#"><img src="image/logoit.png" alt="" width="2%"></a> -->
+                <a class="navbar-brand" href="/"><img src="/image/logo.jpg" alt="logo" class="navbar-logo"></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -30,57 +30,57 @@
                     <li><a href="/contact">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if (!Session::has('userId'))
-                        <li><a href="#" onclick="openForm(event,'login')"><span class="glyphicon glyphicon-user">
-                                </span> Login</a></li>
-                        <li><a href="#" onclick="openForm(event,'register')"><span
-                                    class="glyphicon glyphicon-list-alt">
-                                </span>
-                                Register</a></li>
-                    @else
-                        <li>
-                            <a href="/profile"><span class="glyphicon glyphicon-user"> </span>
-                                &nbsp{{ Session::get('userName') }}</a>
-                        </li>
-                        <li class="header__icon">
-                            <a href="/notification">
-                                <span class="material-icons">
-                                    <?php
-                                    $notifications = App\Models\User::find(Session::get('userId'))->unReadNotifications;
-                                    $k = 0;
-                                    foreach ($notifications as $notification) {
-                                        if (array_key_exists('date', $notification['data'])) {
-                                            if (strtotime($notification['data']['date']) > strtotime(date('Y-m-d'))) {
-                                                unset($notifications[$k]);
-                                            }
+                    <li>
+                        <button id="themeToggle" class="btn btn-primary btn-sm" aria-pressed="false" title="Toggle theme">
+                            <span class="material-icons">brightness_6</span>
+                        </button>
+                    </li>
+                @if (!Session::has('userId'))
+                    <li><a href="#" onclick="openForm(event,'login')"><span class="glyphicon glyphicon-user">
+                            </span> Login</a></li>
+                    <li><a href="#" onclick="openForm(event,'register')"><span
+                                class="glyphicon glyphicon-list-alt">
+                            </span>
+                            Register</a></li>
+                @else
+                    <li>
+                        <a href="/profile"><span class="glyphicon glyphicon-user"> </span>
+                            &nbsp{{ Session::get('userName') }}</a>
+                    </li>
+                    <li class="header__icon">
+                        <a href="/notification">
+                            <span class="material-icons">
+                                <?php
+                                $notifications = App\Models\User::find(Session::get('userId'))->unReadNotifications;
+                                $k = 0;
+                                foreach ($notifications as $notification) {
+                                    if (array_key_exists('date', $notification['data'])) {
+                                        if (strtotime($notification['data']['date']) > strtotime(date('Y-m-d'))) {
+                                            unset($notifications[$k]);
                                         }
-                                        $k++;
                                     }
-                                    ?>
-                                    @if ($notifications->count() > 0)
-                                        notifications_active
-                                    @else
-                                        notifications
-                                    @endif
-                                </span>
-                            </a>
-                        <li>
-                        <li class="header__icon">
-                            <a href="/cart"><span class="material-icons">
-                                    shopping_cart
-                                </span>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
+                                    $k++;
+                                }
+                                ?>
+                                @if ($notifications->count() > 0)
+                                    notifications_active
+                                @else
+                                    notifications
+                                @endif
+                            </span>
+                        </a>
+                    <li>
+                    <li class="header__icon">
+                        <a href="/cart"><span class="material-icons">
+                                shopping_cart
+                            </span>
+                        </a>
+                    </li>
+                @endif
             </div>
             <!--/.nav-collapse -->
         </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="logo">
-        <a href="/"><img src="/image/logo.jpg" width="100%" /></a>
-    </div>
-</div>
+<!-- Removed standalone logo container to prevent overlap on content pages -->

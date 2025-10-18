@@ -1012,17 +1012,7 @@ a {
 
 /* PopUp form */
 
-:root {
-    --color-primary: rgb(240, 100, 73);
-    --color-primary-light: rgb(223, 117, 117);
-    --color-primary-dark: rgb(173, 32, 32);
-
-    --form-background: black;
-    --form-content-color: white;
-
-    --checkbox-background: grey;
-    --checkbox-selected-background: red;
-}
+/* Popup form variables moved to theme.css for unified light/dark styling */
 
 .form__container {
     position: fixed;
@@ -1122,13 +1112,14 @@ a {
     font-size: 16px;
     padding: 0 20px;
     outline: none;
-    background: none;
+    background-color: #fff;
     z-index: 1;
     color: var(--form-content-color);
 }
 
 ::placeholder {
-    color: transparent;
+    color: var(--color-muted);
+    opacity: 0.8;
 }
 
 .label {
@@ -1192,22 +1183,21 @@ input:checked[type="checkbox"]:before {
 }
 
 .submit__button {
-    display: block;
-    margin-left: auto;
-    padding: 15px 30px;
+    display: inline-block;
+    padding: 12px 20px;
     border: none;
-    background-color: var(--color-primary);
-    color: white;
-    border-radius: 6px;
+    background-color: var(--color-accent);
+    color: #fff;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 30px;
+    font-weight: 600;
 }
 
 .submit__button:hover {
-    background-color: var(--color-primary-dark);
+    background-color: #1f60ec;
     transform: translateY(-2px);
-    transition: 0.5s;
+    transition: 0.2s ease-in-out;
 }
 
 .input:focus + .label {

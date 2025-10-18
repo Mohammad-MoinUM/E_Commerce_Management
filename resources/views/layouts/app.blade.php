@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Minimatic Solutions') }}</title>
+    <title>{{ config('app.name', 'Moin\'s_Online_Marketing') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -28,6 +28,7 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -93,6 +94,46 @@
         @if ($errors->any())
             toastr.error('{{ $errors->first() }}');
         @endif
+    </script>
+    <script>
+      (function(){
+        function applyTheme(theme){
+          var root = document.documentElement;
+          if(theme === 'dark') { root.setAttribute('data-theme','dark'); }
+          else { root.removeAttribute('data-theme'); }
+        }
+        function initTheme(){
+          try {
+            var saved = localStorage.getItem('theme');
+            if(!saved){
+              var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+              saved = prefersDark ? 'dark' : 'light';
+            }
+            applyTheme(saved);
+            var btn = document.getElementById('themeToggle');
+            if(btn){
+              var setBtn = function(){
+                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+                btn.innerHTML = isDark ? '<span class="material-icons">dark_mode</span>' : '<span class="material-icons">light_mode</span>';
+              };
+              setBtn();
+              btn.addEventListener('click', function(){
+                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                var next = isDark ? 'light' : 'dark';
+                localStorage.setItem('theme', next);
+                applyTheme(next);
+                setBtn();
+              });
+            }
+          } catch(e) {}
+        }
+        if(document.readyState === 'loading'){
+          document.addEventListener('DOMContentLoaded', initTheme);
+        } else {
+          initTheme();
+        }
+      })();
     </script>
 </body>
 
