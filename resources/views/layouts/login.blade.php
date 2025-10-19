@@ -10,27 +10,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
+    <!-- Scripts (minimal for auth pages) -->
     <script src="/admino/vendors/base/vendor.bundle.base.js"></script>
-    <script src="/admino/vendors/chart.js/Chart.min.js"></script>
-    <script src="/admino/vendors/datatables.net/jquery.dataTables.js"></script>
-    <script src="/admino/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
     <script src="/admino/js/off-canvas.js"></script>
     <script src="/admino/js/hoverable-collapse.js"></script>
     <script src="/admino/js/template.js"></script>
-    <script src="/admino/js/dashboard.js"></script>
-    <script src="/admino/js/data-table.js"></script>
-    <script src="/admino/js/jquery.dataTables.js"></script>
-    <script src="/admino/js/dataTables.bootstrap4.js"></script>
-    <script src="/admino/js/tablejs.js"></script>
     <script src="/admino/js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
     <!-- Fonts -->
@@ -56,7 +42,6 @@
     </style>
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 </head>

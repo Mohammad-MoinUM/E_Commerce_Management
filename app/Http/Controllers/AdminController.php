@@ -86,4 +86,60 @@ class AdminController extends Controller
               ->with('alert-type','error')
               ->with('message','Logout Successfully');
     }
+
+    // Admin Profile Settings
+    public function settings()
+    {
+        $admin = Admin::find(Session::get('loginId'));
+        return view('admin.pages.settings.edit', compact('admin'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $admin = Admin::find(Session::get('loginId'));
+
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:admin,email,' . $admin->id,
+            'password' => 'nullable|min:6',
+        ]);
+
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        $admin->update($data);
+        $request->session()->put('adminName', $data['name']);
+
+        return redirect('/admin/settings')
+            ->with('alert-type', 'success')
+            ->with('message', 'Profile updated successfully');
+    }
+
+    // Admin Forgot Password (simple reset)
+    public function showForgotPassword()
+    {
+        return view('admin.pages.password.forgot');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $admin = Admin::where('email', $data['email'])->first();
+        if (!$admin) {
+            return back()->with('alert-type', 'error')->with('message', 'Email is not registered');
+        }
+
+        $admin->update(['password' => Hash::make($data['password'])]);
+
+        return redirect('/admin')
+            ->with('alert-type', 'success')
+            ->with('message', 'Password reset successfully. Please sign in.');
+    }
 }
