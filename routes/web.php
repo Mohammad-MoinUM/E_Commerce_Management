@@ -85,6 +85,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/signup', 'signup')->middleware('alreadyLogin');
         Route::post('/signup', 'store');
         Route::get('/dashboard', 'view')->middleware('adminAuth');
+        Route::get('/settings', 'settings')->middleware('adminAuth');
+        Route::patch('/settings', 'updateSettings')->middleware('adminAuth');
+        Route::get('/forgot-password', 'showForgotPassword')->middleware('alreadyLogin');
+        Route::post('/forgot-password', 'resetPassword');
         Route::get('/logout', 'logout')->middleware('adminAuth');
     });
 
