@@ -95,46 +95,6 @@
             toastr.error('{{ $errors->first() }}');
         @endif
     </script>
-    <script>
-      (function(){
-        function applyTheme(theme){
-          var root = document.documentElement;
-          if(theme === 'dark') { root.setAttribute('data-theme','dark'); }
-          else { root.removeAttribute('data-theme'); }
-        }
-        function initTheme(){
-          try {
-            var saved = localStorage.getItem('theme');
-            if(!saved){
-              var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-              saved = prefersDark ? 'dark' : 'light';
-            }
-            applyTheme(saved);
-            var btn = document.getElementById('themeToggle');
-            if(btn){
-              var setBtn = function(){
-                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-                btn.innerHTML = isDark ? '<span class="material-icons">dark_mode</span>' : '<span class="material-icons">light_mode</span>';
-              };
-              setBtn();
-              btn.addEventListener('click', function(){
-                var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                var next = isDark ? 'light' : 'dark';
-                localStorage.setItem('theme', next);
-                applyTheme(next);
-                setBtn();
-              });
-            }
-          } catch(e) {}
-        }
-        if(document.readyState === 'loading'){
-          document.addEventListener('DOMContentLoaded', initTheme);
-        } else {
-          initTheme();
-        }
-      })();
-    </script>
 </body>
 
 </html>

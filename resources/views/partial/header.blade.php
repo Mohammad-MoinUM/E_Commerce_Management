@@ -30,11 +30,6 @@
                     <li><a href="/contact">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <button id="themeToggle" class="btn btn-primary btn-sm" aria-pressed="false" title="Toggle theme">
-                            <span class="material-icons">brightness_6</span>
-                        </button>
-                    </li>
                 @if (!Session::has('userId'))
                     <li><a href="#" onclick="openForm(event,'login')"><span class="glyphicon glyphicon-user">
                             </span> Login</a></li>
