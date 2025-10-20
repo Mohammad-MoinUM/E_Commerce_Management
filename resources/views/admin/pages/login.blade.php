@@ -32,7 +32,7 @@
                     Keep me signed in
                   </label>
                 </div>
-                <a href="#" class="auth-link text-black">Forgot password?</a>
+                <a href="/admin/forgot-password" class="auth-link text-black">Forgot password?</a>
               </div>
               <div class="mt-3">
                 <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>

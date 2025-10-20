@@ -336,11 +336,11 @@ html, body {
 .logo { max-width: 160px; margin: 10px auto 0; }
 .logo img { border-radius: 50%; box-shadow: var(--shadow-sm); }
 .navbar-brand .navbar-logo {
-  height: 40px;
-  width: 40px;
+  height: 56px;
+  width: 56px;
   border-radius: 50%;
   box-shadow: var(--shadow-sm);
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 /* Login page containers use themed surfaces */

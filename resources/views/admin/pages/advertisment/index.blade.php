@@ -6,7 +6,7 @@
     <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body text-sm-left">
-                <a href="/admin/advertisment/add" class="btn btn-primary">Add Attributes</a>
+                <a href="/admin/advertisment/add" class="btn btn-primary">Add Advertisment</a>
             </div>
         </div>
     </div>

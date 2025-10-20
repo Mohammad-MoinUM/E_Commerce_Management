@@ -1,0 +1,22 @@
+/* Admin overrides: enlarge navbar logo for a more professional look */
+
+/* Main admin logo */
+.navbar .navbar-brand-wrapper .navbar-brand img {
+  height: 48px !important;    /* fits within ~60px navbar */
+  width: auto !important;      /* keep aspect ratio */
+  max-width: 220px !important; /* avoid overflow in brand wrapper */
+  border-radius: 50%;           /* match circular style used elsewhere */
+}
+
+/* Mini logo (mobile / collapsed) */
+.navbar .navbar-brand-wrapper .brand-logo-mini img {
+  height: 40px !important;
+  width: auto !important;
+  max-width: 56px !important;
+  border-radius: 50%;
+}
+
+/* Slight alignment improvement */
+.navbar .navbar-brand-wrapper .navbar-brand-inner-wrapper {
+  align-items: center !important;
+}
