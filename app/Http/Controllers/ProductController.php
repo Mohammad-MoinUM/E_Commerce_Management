@@ -85,9 +85,13 @@ class ProductController extends Controller
             // GD/Imagick missing or Intervention unable to process: keep original upload
         }
         $imagePath = "/storage/" . $imagePath;
+        $attr = request('attributeArr');
+        if (!is_array($attr) || empty($attr)) {
+            $attr = [];
+        }
         $data = array_merge(
             $data,
-            ['attributes' => json_encode(request('attributeArr'))],
+            ['attributes' => json_encode((object) $attr)],
             ['image' => $imagePath]
         );
         Product::create($data);
@@ -100,7 +104,7 @@ class ProductController extends Controller
         $brands = Brand::get();
         $discounts = Discount::get();
         $attributes = Attribute::get();
-        $selectedAttributes = get_object_vars(json_decode($product->attributes));
+        $selectedAttributes = json_decode($product->attributes ?? '{}', true);
         return view('admin.pages.product.edit', compact('categories', 'brands', 'discounts', 'product', 'attributes', 'selectedAttributes'));
     }
 
@@ -121,7 +125,7 @@ class ProductController extends Controller
         if (request('attributeArr') != null) {
             $data = array_merge(
                 $data,
-                ['attributes' => json_encode(request('attributeArr'))],
+                ['attributes' => json_encode((object) request('attributeArr'))],
             );
         }
         if (request('image') != null) {

@@ -70,9 +70,13 @@ class VendorProductController extends Controller
             $defaultDiscountId = \App\Models\Discount::firstOrCreate(['name' => 'No Discount'])->id;
             $data['discount_id'] = $defaultDiscountId;
         }
+        $attr = request('attributeArr');
+        if (!is_array($attr) || empty($attr)) {
+            $attr = [];
+        }
         $data = array_merge(
             $data,
-            ['attributes' => json_encode(request('attributeArr') ?? [])],
+            ['attributes' => json_encode((object) $attr)],
             ['image' => $imagePath]
         );
         Product::create($data);
@@ -85,7 +89,7 @@ class VendorProductController extends Controller
         $brands = Brand::get();
         $discounts = Discount::get();
         $attributes = Attribute::get();
-        $selectedAttributes = get_object_vars(json_decode($product->attributes));
+        $selectedAttributes = json_decode($product->attributes ?? '{}', true);
         return view('vendor.pages.product.edit', compact('categories', 'brands', 'discounts', 'product', 'attributes', 'selectedAttributes'));
     }
 
@@ -106,7 +110,7 @@ class VendorProductController extends Controller
         if (request('attributeArr') != null) {
             $data = array_merge(
                 $data,
-                ['attributes' => json_encode(request('attributeArr'))],
+                ['attributes' => json_encode((object) request('attributeArr'))],
             );
         }
         if (request('image') != null) {
